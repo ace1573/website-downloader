@@ -1,0 +1,19 @@
+{
+  "name": "website-downloader",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ace1573/website-downloader.git"
+  },
+  "description": "下载网站内容",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
