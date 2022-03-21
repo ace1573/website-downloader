@@ -1,26 +1,27 @@
 const http = require("http");
-const https = require("https");
-const url = require("url");
+const { URL } = require('url');
 const path = require("path");  
 const fs = require("fs");
 const axios = require('axios')
 
-const websiteUrl = 'https://baidu.com'
+const websiteUrl = 'http://meridian-audio.com'
 
 //启动http服务器
 http.createServer(onRequest).listen(8888);
 console.log("Server has started on 8888.");
 
+
 //监听请求
 function onRequest(request, response) {
-    var urlObj = url.parse(request.url);
+    var urlObj = new URL(request.url, `http://${request.headers.host}`);
+
     var pathname = urlObj.pathname;
 
     if(pathname.endsWith('/')) pathname += 'index.html'
     //保存文件地址
     pathname = './download' + pathname
 
-    console.log(pathname)
+    console.log('visit-->', pathname)
     
     if(!fs.existsSync(pathname)){
       //请求
@@ -53,29 +54,12 @@ function onRequest(request, response) {
 
 
 
-// 递归创建目录 异步方法  
-function mkdirs(dirname, callback) {  
-  fs.exists(dirname, function (exists) {  
-      if (exists) {  
-          callback();  
-      } else {  
-          // console.log(path.dirname(dirname));  
-          mkdirs(path.dirname(dirname), function () {  
-              fs.mkdir(dirname, callback);  
-              console.log('在' + path.dirname(dirname) + '目录创建好' + dirname  +'目录');
-          });  
-      }  
-  });  
-}  
 // 递归创建目录 同步方法
 function mkdirsSync(dirname) {
   if (fs.existsSync(dirname)) {
     return true;
   } else {
-    if (mkdirsSync(path.dirname(dirname))) {
-      fs.mkdirSync(dirname);
-      return true;
-    }
+    fs.mkdirSync(dirname, { recursive: true })
   }
 }
 
