@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const axios = require('axios')
 
-const websiteUrl = 'http://meridian-audio.com'
+const websiteUrl = 'https://baidu.com'
 
 //启动http服务器
 http.createServer(onRequest).listen(8888);
